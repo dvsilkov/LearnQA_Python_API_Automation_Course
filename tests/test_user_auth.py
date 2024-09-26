@@ -43,7 +43,7 @@ class TestUserAuth(BaseCase):
         res_2 = requests.get(url_2, cookies={"auth_sid": self.auth_sid}, headers={"x-csrf-token": self.token})
 
         # проверка, что в ответе есть id пользователя и что user id совпадают в обоих запросах
-        Assertions.assert_json_value_by_name(
+        Assertions.assert_json_value_by_key(
             res_2,
             "user_id",
             self.user_id_from_auth_method,
@@ -65,7 +65,7 @@ class TestUserAuth(BaseCase):
             res_2 = requests.get(url_2, cookies={"auth_sid": self.auth_sid})
 
         # проверка, что в ответе есть id пользователя и что user id равен 0 во втором запросе
-        Assertions.assert_json_value_by_name(
+        Assertions.assert_json_value_by_key(
             res_2,
             "user_id",
             0,
