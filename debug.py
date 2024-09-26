@@ -19,5 +19,3 @@ token = res.headers.get("x-csrf-token")  # сам токен
 res2 = requests.get("https://playground.learnqa.ru/api/user/auth", cookies={"auth_sid": auth_sid},
                     headers={"x-csrf-token": token})
 print(res2.json().get("user_id"))
-
-requests.Response.status_code
