@@ -1,4 +1,5 @@
 import json.decoder
+from datetime import datetime
 
 from requests import Response
 
@@ -33,3 +34,19 @@ class BaseCase:
         assert name in response_as_dict, f"Response does not have key '{name}'"
         return response_as_dict.get(name)
 
+    def prepare_registration_data(self, email=None):
+        """
+        Метод создает набор пользовательских данных.
+        В качестве параметра указан email со значением по умолчанию None, в этом случае он будет случайный
+        """
+        if email is None:
+            # случайный email, используя текущие дату и время
+            email = f"learnqa{datetime.now().strftime("%d%m%Y%H%M%S")}@example.com"
+
+        return {
+            "password": "123",
+            "username": "learnqa",
+            "firstName": "learnqa",
+            "lastName": "learnqa",
+            "email": email
+        }
