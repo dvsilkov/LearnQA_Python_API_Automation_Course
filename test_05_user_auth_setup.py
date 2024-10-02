@@ -16,6 +16,7 @@ class TestUserAuth():
     Метод делает запрос по первой ссылке, для авторизации пользователя по логину и паролю.
     Проверяет, что cookie корректный, в header есть токен, а в ответе есть user id
     """
+    @pytest.fixture()
     def setup(self):
         url_1 = "https://playground.learnqa.ru/api/user/login"  # POST Logs user into the system
 
@@ -38,7 +39,7 @@ class TestUserAuth():
     """ 
     Успешный сценарий проверки аутентификации с использованием уже полученных cookies и headers в методе setup
     """
-    def test_auth_user(self):
+    def test_auth_user(self, setup):
         url_2 = "https://playground.learnqa.ru/api/user/auth" # GET Get user id you are authorizes as OR get 0 if not authorized
 
         # второй запрос с использованием данных, полученных из первого
@@ -55,7 +56,7 @@ class TestUserAuth():
     Сделано два параметра, для запроса без cookies и без headers. В обоих случаях в ответе user_id должен быть равен 0
     """
     @pytest.mark.parametrize("condition", exclude_params)
-    def test_negative_auth_user(self, condition):
+    def test_negative_auth_user(self, setup, condition):
         url_2 = "https://playground.learnqa.ru/api/user/auth" # GET Get user id you are authorizes as OR get 0 if not authorized
 
         # второй запрос с использованием данных, полученных из первого

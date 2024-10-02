@@ -1,11 +1,11 @@
 import requests
 
 
-class MyRequests
+class MyRequests:
     """ Класс с методами запросов """
 
     @staticmethod
-    def get (url: str, data: dict=None, headers: dict=None, cookies: dict=None):
+    def get(url: str, data: dict = None, headers: dict = None, cookies: dict = None):
         """
         Метод для выполнения GET запроса.
         Принимает необходимые параметры и возвращает ответ
@@ -13,7 +13,7 @@ class MyRequests
         return MyRequests._send(url, data, headers, cookies, "GET")
 
     @staticmethod
-    def post (url: str, data: dict=None, headers: dict=None, cookies: dict=None):
+    def post(url: str, data: dict = None, headers: dict = None, cookies: dict = None):
         """
         Метод для выполнения POST запроса.
         Принимает необходимые параметры и возвращает ответ
@@ -21,7 +21,7 @@ class MyRequests
         return MyRequests._send(url, data, headers, cookies, "POST")
 
     @staticmethod
-    def put (url: str, data: dict=None, headers: dict=None, cookies: dict=None):
+    def put(url: str, data: dict = None, headers: dict = None, cookies: dict = None):
         """
         Метод для выполнения PUT запроса.
         Принимает необходимые параметры и возвращает ответ
@@ -29,7 +29,7 @@ class MyRequests
         return MyRequests._send(url, data, headers, cookies, "PUT")
 
     @staticmethod
-    def delete (url: str, data: dict=None, headers: dict=None, cookies: dict=None):
+    def delete(url: str, data: dict = None, headers: dict = None, cookies: dict = None):
         """
         Метод для выполнения DELETE запроса.
         Принимает необходимые параметры и возвращает ответ
@@ -42,7 +42,7 @@ class MyRequests
         Приватный метод для использования внутри модуля или класса.
         Выполняет непосредственно запрос через библиотеку requests, исходя из переданных параметров
         """
-        full_url = f"https://playground.learnqa.ru/api{url}" #
+        full_url = f"https://playground.learnqa.ru/api{url}"  #
         if headers is None:
             headers = {}
         if cookies is None:

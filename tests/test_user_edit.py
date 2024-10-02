@@ -1,6 +1,8 @@
 import requests
 from lib.base_case import BaseCase
 from lib.assertions import Assertions
+from lib.my_requests import MyRequests
+
 
 class TestUserEdit(BaseCase):
     """ Класс с тестами"""
@@ -9,9 +11,8 @@ class TestUserEdit(BaseCase):
         Метод
         """
         # REGISTRATION
-        url_reg = "https://playground.learnqa.ru/api/user/"  # POST: Create user
         register_data = self.prepare_registration_data()
-        response_1 = requests.post(url_reg, data=register_data)
+        response_1 = MyRequests.post("/user/", data=register_data) # POST: Create user
         Assertions.assert_status_code(response_1,200)
         Assertions.assert_json_has_key(response_1, "id")
 
@@ -21,23 +22,19 @@ class TestUserEdit(BaseCase):
         user_id = self.get_json_value(response_1, "id") # значение id пользователя
 
         # LOGIN
-        url_login = "https://playground.learnqa.ru/api/user/login"  # POST: Logs user into the system
-
-        # данные для авторизации
-        login_data = {
+        login_data = {          # данные для авторизации
             "email": email,
             "password": password
         }
 
-        response_2 = requests.post(url_login, data=login_data)
+        response_2 = MyRequests.post("/user/login" , data=login_data) # POST: Logs user into the system
         auth_sid = self.get_cookie(response_2, "auth_sid")  # значение cookie
         token = self.get_header(response_2, "x-csrf-token")  # сам токен
 
         # EDIT
         new_name = "Changed name"
-        url_get = f"https://playground.learnqa.ru/api/user/{user_id}" # PUT: Update user (must be logged in as this user)
-        response_3 = requests.put(
-            url_get,
+        response_3 = MyRequests.put(                # PUT: Update user (must be logged in as this user)
+            f"/user/{user_id}",
             headers={"x-csrf-token": token},
             cookies={"auth_sid":auth_sid},
             data={"firstName": new_name}
@@ -46,8 +43,8 @@ class TestUserEdit(BaseCase):
         Assertions.assert_status_code(response_3, 200)
 
         # GET
-        response_4 = requests.get(
-            url_get,
+        response_4 = MyRequests.get(
+            f"/user/{user_id}",
             headers={"x-csrf-token": token},
             cookies={"auth_sid": auth_sid}
         )

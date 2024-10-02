@@ -5,6 +5,7 @@ import pytest
 import requests
 from lib.assertions import Assertions
 from lib.base_case import BaseCase
+from lib.my_requests import MyRequests
 
 
 class TestUserRegister(BaseCase):
@@ -15,21 +16,19 @@ class TestUserRegister(BaseCase):
         Тест проверяет создания нового пользователя.
         Также проверяется значение status code и наличие ключа "id".
         """
-        url = "https://playground.learnqa.ru/api/user/"  # POST: Create user
         data = self.prepare_registration_data()
-        response = requests.post(url=url, data=data)
+        response = MyRequests.post("/user/", data=data) # POST: Create user
         Assertions.assert_status_code(response, 200)
         Assertions.assert_json_has_key(response, "id")
 
-    def test_create_user_with_existing_mail(self):
+    def test_try_create_user_with_existing_mail(self):
         """
         Тест проверяет невозможность создания пользователя с существующим email.
         Также проверяется значение status code и текст сообщения.
         """
-        url = "https://playground.learnqa.ru/api/user/"  # POST: Create user
         email = "vinkotov@example.com"
         data = self.prepare_registration_data(email)
-        response = requests.post(url=url, data=data)
+        response = MyRequests.post("/user/", data=data) # POST: Create user
         Assertions.assert_status_code(response, 400)
         # проверка текста сообщения
         # response.content возвращает байтовую строку, поэтому преобразуем ее с помощью decode("utf-8")

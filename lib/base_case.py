@@ -3,6 +3,9 @@ from datetime import datetime
 
 from requests import Response
 
+from lib.my_requests import MyRequests
+
+
 class BaseCase:
     """ Класс с основными методами """
 
@@ -36,7 +39,7 @@ class BaseCase:
 
     def prepare_registration_data(self, email=None):
         """
-        Метод создает набор пользовательских данных.
+        Метод создает набор пользовательских данных в виде словаря.
         В качестве параметра указан email со значением по умолчанию None, в этом случае он будет случайный
         """
         if email is None:
@@ -50,3 +53,22 @@ class BaseCase:
             "lastName": "learnqa",
             "email": email
         }
+
+    def user_logs_into_the_system(self, email="vinkotov@example.com", password="1234"):
+        """
+        Метод делает запрос по ссылке для авторизации пользователя по логину и паролю (по умолчанию значения заданы).
+        Получает cookie, token и user id из ответа и возвращает их значения в виде словаря.
+        """
+
+        # данные для авторизации
+        data = {
+            "email": email,
+            "password": password
+        }
+        response = MyRequests.post("/user/login", data=data)  # POST: Logs user into the system
+        # получаем cookie, token и user_id из ответа с помощью методов из класса BaseCase
+        auth_sid = self.get_cookie(response, "auth_sid")  # значение cookie
+        token = self.get_header(response, "x-csrf-token")  # сам токен
+        user_id_from_auth_method = self.get_json_value(response, "user_id")  # значение id пользователя
+        # возвращаем значения в виде кортежа
+        return auth_sid, token, user_id_from_auth_method
