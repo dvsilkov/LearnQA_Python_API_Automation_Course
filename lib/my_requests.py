@@ -1,5 +1,7 @@
 import requests
 
+from lib.my_logger import MyLogger
+
 
 class MyRequests:
     """ Класс с методами запросов """
@@ -48,6 +50,9 @@ class MyRequests:
         if cookies is None:
             cookies = {}
 
+        # запись в лог параметров, с которыми сделан запрос
+        MyLogger.add_request(full_url, data, headers, cookies, method)
+
         if method == "GET":
             response = requests.get(full_url, params=data, headers=headers, cookies=cookies)
         elif method == "POST":
@@ -58,5 +63,8 @@ class MyRequests:
             response = requests.delete(full_url, data=data, headers=headers, cookies=cookies)
         else:
             raise Exception(f"Bad HTTP method '{method}' was received")
+
+        # запись ответа в лог
+        MyLogger.add_response(response)
 
         return response

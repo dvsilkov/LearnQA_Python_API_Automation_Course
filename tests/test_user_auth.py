@@ -40,7 +40,7 @@ class TestUserAuth(BaseCase):
         )
 
     @pytest.mark.parametrize("condition", exclude_params)
-    def test_negative_auth_user(self, user_logs_into_the_system, condition):
+    def test_negative_auth_user(self, condition):
         """
         Негативный сценарий проверки аутентификации с использованием уже полученных cookies и headers в методе setup.
         Имеет параметр с двумя значениями, для запроса без cookies и без headers.
