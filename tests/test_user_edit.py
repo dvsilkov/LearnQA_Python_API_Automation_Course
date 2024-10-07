@@ -1,11 +1,15 @@
+import allure
 import requests
 from lib.base_case import BaseCase
 from lib.assertions import Assertions
 from lib.my_requests import MyRequests
 
 
+@allure.epic("User data editing cases")
 class TestUserEdit(BaseCase):
-    """ Класс с тестами"""
+    """ Класс с тестами по редактированию данных пользователя"""
+
+    @allure.description("This test create new user, login into system and edit some field")
     def test_edit_just_created_user(self):
         """
         Метод

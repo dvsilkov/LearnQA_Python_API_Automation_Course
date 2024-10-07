@@ -1,4 +1,5 @@
 import requests
+import allure
 
 from lib.my_logger import MyLogger
 
@@ -12,7 +13,8 @@ class MyRequests:
         Метод для выполнения GET запроса.
         Принимает необходимые параметры и возвращает ответ
         """
-        return MyRequests._send(url, data, headers, cookies, "GET")
+        with allure.step(f"GET request to URL '{url}'"):
+            return MyRequests._send(url, data, headers, cookies, "GET")
 
     @staticmethod
     def post(url: str, data: dict = None, headers: dict = None, cookies: dict = None):
@@ -20,7 +22,8 @@ class MyRequests:
         Метод для выполнения POST запроса.
         Принимает необходимые параметры и возвращает ответ
         """
-        return MyRequests._send(url, data, headers, cookies, "POST")
+        with allure.step(f"POST request to URL '{url}'"):
+            return MyRequests._send(url, data, headers, cookies, "POST")
 
     @staticmethod
     def put(url: str, data: dict = None, headers: dict = None, cookies: dict = None):
@@ -28,7 +31,8 @@ class MyRequests:
         Метод для выполнения PUT запроса.
         Принимает необходимые параметры и возвращает ответ
         """
-        return MyRequests._send(url, data, headers, cookies, "PUT")
+        with allure.step(f"PUT request to URL '{url}'"):
+            return MyRequests._send(url, data, headers, cookies, "PUT")
 
     @staticmethod
     def delete(url: str, data: dict = None, headers: dict = None, cookies: dict = None):
@@ -36,7 +40,8 @@ class MyRequests:
         Метод для выполнения DELETE запроса.
         Принимает необходимые параметры и возвращает ответ
         """
-        return MyRequests._send(url, data, headers, cookies, "DELETE")
+        with allure.step(f"DELETE request to URL '{url}'"):
+            return MyRequests._send(url, data, headers, cookies, "DELETE")
 
     @staticmethod
     def _send(url: str, data: dict, headers: dict, cookies: dict, method: str):

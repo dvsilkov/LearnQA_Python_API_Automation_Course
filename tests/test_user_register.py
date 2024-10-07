@@ -1,6 +1,7 @@
 from datetime import datetime
 from time import strftime
 
+import allure
 import pytest
 import requests
 from lib.assertions import Assertions
@@ -8,9 +9,11 @@ from lib.base_case import BaseCase
 from lib.my_requests import MyRequests
 
 
+@allure.epic("User registration cases")
 class TestUserRegister(BaseCase):
     """ Класс с тестами по созданию нового пользователя"""
 
+    @allure.description("This test successfully create new user")
     def test_create_user_successfully(self):
         """
         Тест проверяет создания нового пользователя.
@@ -21,6 +24,7 @@ class TestUserRegister(BaseCase):
         Assertions.assert_status_code(response, 200)
         Assertions.assert_json_has_key(response, "id")
 
+    @allure.description("This test try to create create user if use existing email")
     def test_try_create_user_with_existing_mail(self):
         """
         Тест проверяет невозможность создания пользователя с существующим email.

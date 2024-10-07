@@ -1,13 +1,16 @@
 """
 The command to run the tests via command line: pytest -s tests/test_user_auth.py
+with allure: pytest -s --alluredir=allure_results/ tests/test_user_auth.py
+run allure report: allure serve allure_results/
 """
 import pytest
-import requests
 from lib.base_case import BaseCase
 from lib.assertions import Assertions
 from lib.my_requests import MyRequests
+import allure
 
 
+@allure.epic("Authorization cases")
 class TestUserAuth(BaseCase):
     """ Класс с тестами по проверке авторизации пользователя"""
     # Параметры для негативного теста
@@ -16,6 +19,7 @@ class TestUserAuth(BaseCase):
         "no_token"
     ]
 
+    @allure.description("This test successfully authorize user by email and password")
     def test_auth_user(self):
         """
         Успешный сценарий проверки аутентификации с использованием уже полученных cookies и headers в методе setup
@@ -39,6 +43,7 @@ class TestUserAuth(BaseCase):
             "User id from auth method is not equal to user id from check method"
         )
 
+    @allure.description("This test checks authorization status without token or cookie")
     @pytest.mark.parametrize("condition", exclude_params)
     def test_negative_auth_user(self, condition):
         """
