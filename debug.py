@@ -1,3 +1,4 @@
+import os
 from datetime import date
 
 import requests
@@ -43,3 +44,6 @@ class Person:
 person = Person.from_birth_year("Egor", 1978)
 print(person.name, person.year, person.age)
 print(Person.is_adult(30))
+
+my_env = os.environ
+print(my_env)

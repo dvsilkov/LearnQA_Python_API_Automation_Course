@@ -2,6 +2,7 @@ import requests
 import allure
 
 from lib.my_logger import MyLogger
+from environment import env_object
 
 
 class MyRequests:
@@ -46,10 +47,11 @@ class MyRequests:
     @staticmethod
     def _send(url: str, data: dict, headers: dict, cookies: dict, method: str):
         """
-        Приватный метод для использования внутри модуля или класса.
+        Название метода начинается с "_". Это приватный метод для использования внутри модуля или класса.
         Выполняет непосредственно запрос через библиотеку requests, исходя из переданных параметров
         """
-        full_url = f"https://playground.learnqa.ru/api{url}"  #
+        base_url = env_object.get_base_url()  # основной url в зависимости от выбранной переменной среды
+        full_url = f"{base_url}{url}"  # полный url
         if headers is None:
             headers = {}
         if cookies is None:

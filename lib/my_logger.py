@@ -17,7 +17,8 @@ class MyLogger:
     @classmethod
     def _write_log_to_file(cls, data: str):
         """
-        Приватный метод для использования внутри модуля или класса.
+        Название метода начинается с "_". Это приватный метод для использования внутри модуля или класса.
+        Декоратор @classmethod, чтобы был доступ к атрибутам класса. Вместо "self" используется "cls".
         Метод используется для непосредственной записи события в файл.
         """
         with open(cls.file_name, "a", encoding="utf-8") as logger_file:
@@ -26,6 +27,7 @@ class MyLogger:
     @classmethod
     def add_request(cls, url: str, data: dict, headers: dict, cookies: dict, method: str):
         """
+        Декоратор @classmethod, чтобы был доступ к атрибутам класса. Вместо "self" используется "cls".
         Метод на входе получает данные, с которыми был сделан запрос, приводит их соответствующему виду, добавляя время.
         Записывается все файл с помощью метода "_write_log_to_file"
         """
@@ -46,6 +48,7 @@ class MyLogger:
     @classmethod
     def add_response(cls, response: Response):
         """
+        Декоратор @classmethod, чтобы был доступ к атрибутам класса. Вместо "self" используется "cls".
         Метод получает на вход ответ на запрос. Из ответа берутся нужные данные.
         Записывается все файл с помощью метода "_write_log_to_file"
         """
