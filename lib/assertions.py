@@ -7,7 +7,9 @@ class Assertions:
     """Класс с методами для различных проверок полученного ответа """
     @staticmethod
     def assert_json_value_by_key(response: Response, key, expected_value, error_message):
-        """ Метод проверяет, что ответ в формате JSON и значение по ключу 'key' имеет ожидаемое значение"""
+        """ Метод проверяет, что ответ в формате JSON,
+        наличие ключа 'key' и что значение по ключу 'key' имеет ожидаемое значение
+        """
         with allure.step(f"Check the JSON value by the key in the response"):
             try:
                 response_as_dict = response.json()
