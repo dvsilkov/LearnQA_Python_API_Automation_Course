@@ -19,7 +19,7 @@ class TestUserAuth(BaseCase):
         "no_token"
     ]
 
-    @allure.description("This test successfully authorize user by email and password")
+    @allure.title("This test successfully authorize user by email and password")
     def test_auth_user(self):
         """
         Успешный сценарий проверки аутентификации с использованием уже полученных cookies и headers в методе setup
@@ -43,7 +43,7 @@ class TestUserAuth(BaseCase):
             "User id from auth method is not equal to user id from check method"
         )
 
-    @allure.description("This test checks authorization status without token or cookie")
+    @allure.title("This test checks authorization status without token or cookie")
     @pytest.mark.parametrize("condition", exclude_params)
     def test_negative_auth_user(self, condition):
         """

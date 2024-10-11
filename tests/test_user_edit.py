@@ -1,5 +1,10 @@
+"""
+The command to run the tests via command line: pytest -s tests/test_user_edit.py
+with allure: pytest -s --alluredir=allure_results/ tests/test_user_edit.py
+run allure report: allure serve allure_results/
+"""
+
 import allure
-import requests
 from lib.base_case import BaseCase
 from lib.assertions import Assertions
 from lib.my_requests import MyRequests
@@ -9,7 +14,7 @@ from lib.my_requests import MyRequests
 class TestUserEdit(BaseCase):
     """ Класс с тестами по редактированию данных пользователя"""
 
-    @allure.description("This test create new user, login into system and edit some field")
+    @allure.title("This test create new user, login into system and edit some field")
     def test_edit_just_created_user(self):
         """
         Метод

@@ -1,4 +1,6 @@
 import json.decoder
+import random
+import string
 from datetime import datetime
 
 import allure
@@ -40,6 +42,18 @@ class BaseCase:
 
             assert name in response_as_dict, f"Response does not have key '{name}'"
             return response_as_dict.get(name)
+
+    def random_string(self, length):
+        """
+        Метод возвращает случайную строку из английских букв в нижнем регистре.
+        Длина строка определяется параметром 'length'
+        """
+        with allure.step(f"Create random string to use this for create test data"):
+            letters = string.ascii_lowercase
+            rnd_str = ""
+            for i in range(length):
+                rnd_str += random.choice(letters)
+            return rnd_str
 
     def prepare_registration_data(self, email=None):
         """
