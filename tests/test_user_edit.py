@@ -17,16 +17,16 @@ class TestUserEdit(BaseCase):
     @allure.title("This test create new user, login into system and edit some field")
     def test_edit_just_created_user(self):
         """
-        Метод
+        Тест создает нового пользователя, авторизуется под ним, редактирует поле 'firstName'.
+        После этого запрашивает данные по этому клиенту и проверяет, что значение поля 'firstName' изменено
         """
         # REGISTRATION
         register_data = self.prepare_registration_data()
-        response_1 = MyRequests.post("/user/", data=register_data) # POST: Create user
-        Assertions.assert_status_code(response_1,200)
-        Assertions.assert_json_has_key(response_1, "id")
+        response_1 = MyRequests.post("/user/", data=register_data)  # POST: Create user
+        Assertions.assert_status_code(response_1,200)  # проверяем статус код
+        Assertions.assert_json_has_key(response_1, "id")  # проверяем наличие поля 'id'
 
         email = register_data["email"]
-        first_name = register_data["firstName"]
         password = register_data["password"]
         user_id = self.get_json_value(response_1, "id") # значение id пользователя
 

@@ -24,7 +24,7 @@ class TestUserAuth(BaseCase):
         """
         Успешный сценарий проверки аутентификации с использованием уже полученных cookies и headers в методе setup
         """
-        # получаем значения cookie, token и user id
+        # авторизуемся под известным пользователем и получаем значения cookie, token и user id
         auth_sid, token, user_id_from_auth_method = self.user_logs_into_the_system()
 
         # GET: Get user id you are authorizes as OR get 0 if not authorized

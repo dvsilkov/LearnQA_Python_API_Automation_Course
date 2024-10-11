@@ -47,3 +47,41 @@ class TestUserGet(BaseCase):
 
         expected_fields = ["username", "email", "firstName", "lastName"]
         Assertions.assert_json_has_keys(response, expected_fields)
+
+    @allure.title("This test get user details if use id or another authorized user")
+    def test_get_user_details_auth_as_another_user(self):
+        """
+        Тест проверяет получение информации об авторизованном пользователе.
+        Сначала происходит авторизация и получение cookie, token и id известного пользователя.
+        Далее регистрация нового пользователя и также авторизация и получение cookie, token и id.
+        Далее запрос данных известного клиента, но с использованием id нового клиента.
+        В ответе должно быть только поле "username"
+        """
+        # авторизуемся под известным пользователем и получаем значения cookie, token и user id
+        auth_sid, token, user_id_from_auth_method = self.user_logs_into_the_system()
+        print(auth_sid, token, user_id_from_auth_method)
+
+        # регистрируем нового пользователя
+        register_data = self.prepare_registration_data()
+        response_1 = MyRequests.post("/user/", data=register_data)  # POST: Create user
+        Assertions.assert_status_code(response_1, 200)
+        Assertions.assert_json_has_key(response_1, "id")
+        email = register_data["email"]
+        password = register_data["password"]
+        username = register_data["username"]
+        user_id = self.get_json_value(response_1, "id")
+
+        # авторизуемся под новым пользователем и получаем значения для него cookie, token и user id
+        new_auth_sid, new_token, new_user_id_from_auth_method = self.user_logs_into_the_system(email, password)
+
+        # делаем запрос для получения данных первого авторизованного пользователя, но id от второго пользователя
+        # GET: Get user info by id (you can get more info for user you are authorized as)
+        response_2 = MyRequests.get(
+            f"/user/{new_user_id_from_auth_method}",
+            headers={"x-csrf-token": token},
+            cookies={"auth_sid": auth_sid}
+        )
+        Assertions.assert_json_value_by_key(response_2, "username", username, "Unknown username value")
+        Assertions.assert_json_has_not_key(response_2, "email")
+        Assertions.assert_json_has_not_key(response_2, "firstName")
+        Assertions.assert_json_has_not_key(response_2, "lastName")

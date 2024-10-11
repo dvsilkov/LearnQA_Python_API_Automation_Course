@@ -55,7 +55,7 @@ class BaseCase:
                 rnd_str += random.choice(letters)
             return rnd_str
 
-    def prepare_registration_data(self, email=None):
+    def prepare_registration_data(self, email=None, username=None):
         """
         Метод создает набор пользовательских данных в виде словаря.
         В качестве параметра указан email со значением по умолчанию None, в этом случае он будет случайный
@@ -64,10 +64,13 @@ class BaseCase:
             if email is None:
                 # случайный email, используя текущие дату и время
                 email = f"learnqa{datetime.now().strftime("%d%m%Y%H%M%S")}@example.com"
+            if username is None:
+                # случайный username, из английских букв в нижнем регистре
+                username = self.random_string(8)
 
             return {
                 "password": "123",
-                "username": "learnqa",
+                "username": username,
                 "firstName": "learnqa",
                 "lastName": "learnqa",
                 "email": email
