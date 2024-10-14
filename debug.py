@@ -3,7 +3,6 @@ from datetime import date
 
 import requests
 import random
-import linecache
 import string
 
 url = "https://playground.learnqa.ru/api/user/login"
