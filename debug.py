@@ -41,6 +41,12 @@ class Person:
     def is_adult(age):
         return age > 18
 
+
+person = Person.from_birth_year("Egor", 1978)
+print(person.name, person.year, person.age)
+print(Person.is_adult(30))
+
+
 def random_string(length):
     letters = string.ascii_lowercase
     rnd_str = ""
@@ -54,7 +60,7 @@ print(random_string(250))
 base_url = "https://playground.learnqa.ru/api"
 url = "/user/"
 full_url = base_url + url
-email = "w@example.com"
+email = f"{random_string(25)}@example.com"
 data = {
     "password": "123",
     "username": "learnqa",
@@ -63,16 +69,15 @@ data = {
     "email": email
 }
 shortest_name = data["username"][0]
-data.update({"username": random_string(251)})
+data.update({"username": random_string(25)})
 print("name is: ", shortest_name)
-response = requests.post(full_url, data=data)  # POST: Create user
-print(response.status_code)
-print(response.content)
+response_1 = requests.post(full_url, data=data)  # POST: Create user
+print(response_1.status_code)
+print(response_1.content)
 
-person = Person.from_birth_year("Egor", 1978)
-print(person.name, person.year, person.age)
-print(Person.is_adult(30))
+response_2 = requests.delete(f"{full_url}2")  # DELETE: DELETE user
+print(response_2.status_code)
+print(response_2.text)
 
 my_env = os.environ
 print(my_env)
-
