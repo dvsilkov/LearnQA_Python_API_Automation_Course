@@ -20,7 +20,7 @@ class TestUserGet(BaseCase):
         Тест проверяет получение информации о неавторизованном пользователе.
         В ответе должно быть только поле "username"
         """
-        user_id_not_auth = 2 # id неавторизованного пользователя
+        user_id_not_auth = 2  # id неавторизованного пользователя
         # GET: Get user info by id (you can get more info for user you are authorized as)
         response = MyRequests.get(f"/user/{user_id_not_auth}")
         Assertions.assert_json_has_key(response, "username")

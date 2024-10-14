@@ -75,3 +75,9 @@ class TestUserDelete(BaseCase):
             "!",
             "Incorrect error message"
         )
+
+        # GET: Get user info by id (you can get more info for user you are authorized as)
+        response_4 = MyRequests.get(f"/user/{user_id}")
+        Assertions.assert_status_code(response_4, 404)
+        # проверка текста сообщения, что пользователь не найден
+        assert response_4.text == "User not found", f"Unexpected response content '{response_4.text}'"

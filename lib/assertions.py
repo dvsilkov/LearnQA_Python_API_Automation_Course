@@ -10,7 +10,7 @@ class Assertions:
         """ Метод проверяет, что ответ в формате JSON,
         наличие ключа 'key' и что значение по ключу 'key' имеет ожидаемое значение
         """
-        with allure.step(f"Check the JSON value by the key in the response"):
+        with allure.step(f"Check the JSON value '{expected_value}' by the key '{key}' in the response"):
             try:
                 response_as_dict = response.json()
             except json.JSONDecodeError:
@@ -21,7 +21,7 @@ class Assertions:
     @staticmethod
     def assert_json_has_key(response: Response, key):
         """ Метод проверяет, что ответ в формате JSON и в нем есть ключ 'key'"""
-        with allure.step(f"Check that the JSON response has necessary key"):
+        with allure.step(f"Check that the JSON response has necessary key '{key}'"):
             try:
                 response_as_dict = response.json()
             except json.JSONDecodeError:
@@ -31,7 +31,7 @@ class Assertions:
     @staticmethod
     def assert_json_has_keys(response: Response, keys: list):
         """ Метод проверяет, что ответ в формате JSON и в нем есть набор ключей 'keys'"""
-        with allure.step(f"Check that the JSON response has necessary keys"):
+        with allure.step(f"Check that the JSON response has necessary key list '{keys}'"):
             try:
                 response_as_dict = response.json()
             except json.JSONDecodeError:
@@ -42,7 +42,7 @@ class Assertions:
     @staticmethod
     def assert_json_has_not_key(response: Response, key):
         """ Метод проверяет, что ответ в формате JSON и в нем нет определенного ключа 'key'"""
-        with allure.step(f"Check that the JSON response has not a specific key"):
+        with allure.step(f"Check that the JSON response has not a specific key '{key}'"):
             try:
                 response_as_dict = response.json()
             except json.JSONDecodeError:
@@ -52,6 +52,6 @@ class Assertions:
     @staticmethod
     def assert_status_code(response: Response, exp_status_code):
         """ Метод проверяет какой статус код в ответе"""
-        with allure.step(f"Check that the response has a correct status code"):
+        with allure.step(f"Check that the response has a correct status code '{exp_status_code}'"):
             assert response.status_code == exp_status_code, \
                 f"Unexpected status code '{response.status_code}', expected value '{exp_status_code}'"
